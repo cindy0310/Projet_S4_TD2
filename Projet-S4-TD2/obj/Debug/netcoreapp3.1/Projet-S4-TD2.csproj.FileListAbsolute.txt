@@ -9,3 +9,16 @@ C:\Users\cindy\OneDrive\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\n
 C:\Users\cindy\OneDrive\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.AssemblyInfo.cs
 C:\Users\cindy\OneDrive\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.dll
 C:\Users\cindy\OneDrive\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.pdb
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\bin\Debug\netcoreapp3.1\Projet-S4-TD2.exe
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\bin\Debug\netcoreapp3.1\Projet-S4-TD2.deps.json
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\bin\Debug\netcoreapp3.1\Projet-S4-TD2.runtimeconfig.json
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\bin\Debug\netcoreapp3.1\Projet-S4-TD2.runtimeconfig.dev.json
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\bin\Debug\netcoreapp3.1\Projet-S4-TD2.dll
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\bin\Debug\netcoreapp3.1\Projet-S4-TD2.pdb
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.csprojAssemblyReference.cache
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.AssemblyInfoInputs.cache
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.AssemblyInfo.cs
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.csproj.CoreCompileInputs.cache
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.dll
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.pdb
+C:\Users\cindy\OneDrive - De Vinci\Documents\GitHub\Projet_S4_TD2\Projet-S4-TD2\obj\Debug\netcoreapp3.1\Projet-S4-TD2.genruntimeconfig.cache
