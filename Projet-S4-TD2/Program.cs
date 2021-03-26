@@ -16,7 +16,7 @@ namespace Projet_S4_TD2
             //image2.From_Image_To_File2("cocotest2.bmp");
             AfficherMatrice(image2.MatriceRGB);
             Console.WriteLine();
-            AfficherMatrice(image2.MatriceA());
+            //AfficherMatrice(image2.MatriceA());
 
             //image2.Agrandir2(2);
             //image2.From_Image_To_File("cocotest.bmp");

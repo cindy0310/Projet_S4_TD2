@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 
 namespace Projet_S4_TD2
 {
     class My_Image
     {
-        byte [] image ;
+        byte[] image;
         private string typeimage;
         private int tailleFichier;
         private int offset;
@@ -16,7 +17,8 @@ namespace Projet_S4_TD2
         private int bitRGB;
         private int tailleimage;
         byte[,] matriceRGB;
-        
+        private Pixel[,] pixel;
+
 
         public My_Image(byte [] image , string typeimage, int tailleFichier, int offset, int largeur, int hauteur, int bitRGB, byte[,] matriceRGB)
         {
@@ -74,6 +76,11 @@ namespace Projet_S4_TD2
         {
             get { return image; }
             set { this.image = value; }
+        }
+        public Pixel[,] Pixel
+        {
+            get { return pixel; }
+            set { this.pixel = value; }
         }
 
         public My_Image(string myfile)
@@ -149,6 +156,18 @@ namespace Projet_S4_TD2
             //Console.WriteLine("bitRGB");
             //Console.WriteLine(bitRGB);
 
+            Pixel[,] pixel = new Pixel[hauteur, largeur];
+            int depart = 54;
+            for (int i = 0; i < hauteur; i++)
+            {
+                for (int j = 0; j < (largeur); j++)
+                {
+                    Pixel pix = new Pixel(image[depart], image[depart + 1], image[depart + 2]);
+                    pixel[i, j] = pix;
+                    depart += 3;
+                }
+            }
+            this.pixel = pixel;
             // IMAGE
 
             int debutimage = 54;
@@ -271,7 +290,7 @@ namespace Projet_S4_TD2
         }
         public void From_Image_To_File(string file) 
         {
-            byte[] tab = new byte[image.Length];
+            byte[] tab = new byte[14 + offset + hauteur * largeur * 3];
             tab[0] = Image[0];
             tab[1] = Image[1];            
             for (int i = 2; i < 6; i++)
@@ -306,21 +325,26 @@ namespace Projet_S4_TD2
             {
                 tab[i] = image[i];
             }
-            byte[] tableau = new byte[3 * largeur * hauteur];
+            byte[] tableau = new byte[largeur * 3 * hauteur];
             int k = 0;
             for (int i = 0; i < hauteur; i++)
             {
-                for (int j = 0; j < largeur * 3; j++)
+                for (int j = 0; j < largeur; j++)
                 {
-                    tableau[k] = matriceRGB[i, j];
+                    tableau[k] = Pixel[i, j].R;
+                    k++;
+                    tableau[k] = Pixel[i, j].G;
+                    k++;
+                    tableau[k] = Pixel[i, j].B;
                     k++;
                 }
             }
-            for (int i = 54; i < image.Length; i++)
+            for (int i = 54; i < tableau.Length; i++)
             {
                 tab[i] = tableau[i - 54];
             }
             File.WriteAllBytes(file, tab);
+            Process.Start(file);
         }
 
 
@@ -360,13 +384,24 @@ namespace Projet_S4_TD2
         
         public void Convertir_Noir_Blanc()
         {
+            /*
             byte[] imagefin = image;
 
             for (int i = 0; i < hauteur; i++)
             {
-                for (int j = 0; j < largeur*3; j += 3)
+                for (int j = 0; j < largeur * 3; j += 3)
                 {
                     matriceRGB[i, j] = matriceRGB[i, j + 1] = matriceRGB[i, j + 2] = Convert.ToByte(Convert.ToInt32((matriceRGB[i, j] + matriceRGB[i, j + 1] + matriceRGB[i, j + 2]) / 3));
+                }
+            }
+            this.image = imagefin;*/
+
+            byte[] imagefin = image;
+            for (int i = 0; i < hauteur; i++)
+            {
+                for (int j = 0; j < largeur; j++)
+                {
+                    pixel[i, j].R = pixel[i, j].G = pixel[i, j].B = Convert.ToByte(Convert.ToInt32((pixel[i, j].R + pixel[i, j].G + pixel[i, j].B) / 3));
                 }
             }
             this.image = imagefin;
@@ -407,13 +442,14 @@ namespace Projet_S4_TD2
 
         public void Miroir()
         {
+            /*
             byte[,] interm = new byte[hauteur, largeur * 3];
             for (int i = 0; i < hauteur; i++)
             {
                 for (int j = 0; j < largeur * 3; j += 3)
                 {
-                    interm[i, j] = matriceRGB[i, 3*largeur - 1 - j - 2];
-                    interm[i, j + 1] = matriceRGB[i, 3*largeur - 1 - (j + 1)];
+                    interm[i, j] = matriceRGB[i, 3 * largeur - 1 - j - 2];
+                    interm[i, j + 1] = matriceRGB[i, 3 * largeur - 1 - (j + 1)];
                     interm[i, j + 2] = matriceRGB[i, 3 * largeur - 1 - j];
                 }
             }
@@ -423,10 +459,24 @@ namespace Projet_S4_TD2
                 {
                     matriceRGB[i, j] = interm[i, j];
                 }
+            }*/
+            Pixel[,] interm = new Pixel[hauteur, largeur];
+            for (int i = 0; i < hauteur; i++)
+            {
+                for (int j = 0; j < largeur; j++)
+                {
+
+                    /*interm[i, j].R = pixel[i, largeur - 1-j].R;
+                    interm[i, j].G = pixel[i, largeur - 1-j].G;
+                    interm[i, j].B = pixel[i, largeur - 1-j].B;*/
+                    interm[i, j] = pixel[i, largeur - 1 - j];
+                }
             }
+            pixel = interm;
         }
+        /*
         public byte[,] Agrandir(int val)
-        {
+        { 
             int hauteurU = hauteur * val;
             int largeurU = largeur * 3 * val;
             byte[,] matrice = new byte[hauteurU, largeurU];
@@ -445,43 +495,136 @@ namespace Projet_S4_TD2
                 }
             }
             return matrice;
+            
         }
-        
-        public void Agrandir2(int taux)
+        */
+        public void Agrandir(int val)
         {
-            int hauteurA = hauteur * taux;
-            int largeurA = largeur * taux;
-            matriceRGB = new byte[hauteurA, largeurA];
-            byte[,] RGBA = new byte[hauteurA, largeurA];
-            for(int i = 0; i<hauteurA; i++)
+            int hauteurU = hauteur * val;
+            int largeurU = largeur * val;
+            Pixel[,] matrice = new Pixel[hauteurU, largeurU];
+            int m = 0;
+            int n = 0;
+            for (int i = 0; i < hauteur; i++)
             {
-                for(int j = 0; j<largeurA; j++)
+                m = i * val;
+                for (int j = 0; j < largeur; j++)
                 {
-                    for(int n = 0; n< taux; n++)
-                    {
-                        
+                    n = j * val;
 
+                    for (int k = 0; k < val; k++)
+                    {
+                        for (int l = 0; l < val; l++)
+                        {
+                            matrice[m + k, n + l] = pixel[i, j];
+
+                        }
+                    }
+
+                }
+
+            }
+            pixel = matrice;
+            largeur = largeurU;
+            hauteur = hauteurU;
+        }
+        public byte[,] Rétrécir(int val)
+        {
+            int hauteurU = hauteur / val;
+            int largeurU = largeur * 3 / val;
+            byte[,] matrice = new byte[hauteurU, largeurU];
+            for (int i = 0; i < hauteurU; i += val)
+            {
+                for (int j = 0; j < largeurU; j += val)
+                {
+                    for (int k = 0; k < val; k++)
+                    {
+                        byte o = matriceRGB[i * val, j * val];
+                        for (int l = 0; l < val; l++)
+                        {
+                            matrice[i + k, j + l] = o;
+                        }
                     }
                 }
             }
+            return matrice;
         }
-        public byte[,] MatriceA()
+        public Pixel[,] MatriceA()
         {
-            byte[,] matriceA = new byte[hauteur + 2, largeur * 3 + 6];
+            Pixel[,] matriceA = new Pixel[hauteur + 2, largeur + 2];
             int colonne = 0;
             int ligne = 0;
-            
             for (int i = 1; i < matriceA.GetLength(0) - 1; i++)
             {
-                for (int j = 1; j < matriceA.GetLength(1) - 4; j++)
+                for (int j = 1; j < matriceA.GetLength(1) - 1; j++)
                 {
-                    matriceA[i, j] = matriceRGB[ i-1 , j-1];
+                    matriceA[i, j] = pixel[ligne, colonne];
                     colonne++;
                 }
                 ligne++;
             }
             return matriceA;
         }
+        public Pixel ConvoCalcul(Pixel[,] matrice, double[,] motif)
+        {
+            double r = 0;
+            double g = 0;
+            double b = 0;
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    r += matrice[i, j].R * motif[i, j];
+                    g += matrice[i, j].G * motif[i, j];
+                    b += matrice[i, j].B * motif[i, j];
+                }
+            }
+            if (r < 0) { r = 0; }
+            if (g < 0) { g = 0; }
+            if (b < 0) { b = 0; }
+            Pixel convo = new Pixel(Convert.ToByte(r), Convert.ToByte(g), Convert.ToByte(b));
+            return convo;
+        }
+        public Pixel[,] Echantillon(int l, int c, Pixel[,] matriceA)
+        {
+            Pixel[,] echantillon = new Pixel[3, 3];
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int m = -1; m < 2; m++)
+                    {
+                        for (int n = -1; n < 2; n++)
+                        {
+                            echantillon[i, j] = matriceA[l + m, c + n];
+                        }
+                    }
+                }
+            }
+            return echantillon;
+        }
+        public void Filtre(double[,] motif)
+        {
+            Pixel[,] matrice = new Pixel[motif.GetLength(0), motif.GetLength(1)];
+            Pixel[,] matriceA = MatriceA();
+            Pixel[,] interm = pixel;
+            int ligne = 0;
+            int colonne = 0;
+            for (int i = 1; i < matriceA.GetLength(0) - 1; i++)
+            {
+                for (int j = 1; j < matriceA.GetLength(1) - 1; j++)
+                {
+                    interm[ligne, colonne] = ConvoCalcul(Echantillon(i, j, matriceA), motif);
+                    colonne++;
+                }
+                ligne++;
+            }
+            pixel = interm;
+        }
+
+
+
 
         /*
         public byte[,] Convolution(byte[,] echantillon, double[,]noyau)
@@ -496,41 +639,7 @@ namespace Projet_S4_TD2
                 }
             }
         */
-        public void Filtre(byte[,] motif)
-        {
-            byte[,] matrice = new byte[motif.GetLength(0), motif.GetLength(1)];
-            byte[,] matriceA = MatriceA();
-            int ligne = 0;
-            int colonne = 0;
-            for (int i = 1; i < matriceA.GetLength(0) - 1; i++)
-            {
-                for (int j = 1; j < matriceA.GetLength(1) - 1; j++)
-                {
-                    for (int m = -1; m < 2; m++)
-                    {
-                        for (int n = -1; n < 2; n++)
-                        {
-                            matrice[ligne, colonne] = matriceA[i + m, j + n];
-                            colonne++;
-                        }
-                        ligne++;
-                    }
-                    matriceRGB[i - 1, j - 1] = Convert.ToByte(ConvoCalcul(matrice, motif));
-                }
-            }
-        }
-        public int ConvoCalcul(byte[,] matrice, byte[,] motif)
-        {
-            int convocalcul = 0;
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    convocalcul = matrice[i, j] * motif[i, j];
-                }
-            }
-            return convocalcul;
-        }
+        
 
 
 
