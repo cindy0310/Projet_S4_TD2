@@ -64,6 +64,66 @@ namespace Projet_S4_TD2
 
 
         }
+        public void Fractale()
+        {
+            double x1 = -2.1;
+            double x2 = 0.6;
+            double y1 = -1.2;
+            double y2 = 1.2;
+            double zoom = 100; // pour une distance de 1 sur le plan, on a 100 pixels sur l'image
+            int NbIteration = 50;
+
+            // calcul de la taille de l'image 
+            double largeur = (x2 - x1) * zoom;
+            double hauteur = (y2 - y1) * zoom;
+
+            int l = Convert.ToInt32(largeur);
+            int h = Convert.ToInt32(hauteur);
+            byte[,] matricergbfractale = new byte[l,h];
+
+
+            //  Création image
+
+
+            //My_Image fractal
+            //(byte[] image, "bm", int tailleFichier, int offset, int largeur, int hautuer, int bitRGB, byte[,] matriceRGB);
+
+
+
+            for (int x = 0; x < largeur; x++)
+            {
+                for (int y = 0; y < hauteur; y++)
+                {
+                    double c_r = x / zoom + x1; // partie réelle de c
+                    double c_i = y / zoom + y1; // partie imaginaire de c
+                    double z_r = 0;
+                    double z_i = 0;
+                    double i = 0;
+
+
+
+
+                    while (((z_r * z_r) - (z_i * z_i) + c_r) < 4 && (i < NbIteration))
+                    {
+                        double tmp = z_r;
+                        z_r = (z_r * z_r) - (z_i * z_i) + c_r;
+                        z_i = 2 * z_i * tmp + c_i;
+                        i++;
+                    }
+
+                    if (i == NbIteration)
+                    {
+                        //matriceRGB[x, y] = 0; //########### Dessiner pixel(x,y)
+
+                    }
+
+                }
+            }
+
+
+
+
+        }
 
 
 
