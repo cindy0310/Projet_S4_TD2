@@ -41,6 +41,7 @@ namespace Projet_S4_TD2
             get { return g; }
             set { g = value; }
         }
+        
     }
 }
 
